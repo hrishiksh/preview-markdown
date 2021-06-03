@@ -1,5 +1,5 @@
 {
-  "name": "preview-markdown",
+  "name": "previewmarkdown",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,17 @@
   },
   "dependencies": {
     "next": "10.2.3",
+    "prism-react-renderer": "^1.2.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-markdown": "^6.0.2",
+    "remark-gfm": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.9",
+    "autoprefixer": "^10.2.6",
+    "postcss": "^8.3.0",
+    "tailwindcss": "^2.1.4",
+    "typescript": "4.3.2"
   }
 }
