@@ -1,71 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import Head from "next/head";
-import Code from "../components/Code";
+import components from "../utils/EditorComponents";
+import EditorBtn from "../components/EditorBtn";
 
 const HomePage = () => {
 	const [textAreaValue, setTextareaValue] = useState("");
+
+	useEffect(() => {
+		const grammerly = document.querySelector("grammarly-extension");
+		console.log(textAreaValue);
+	}, [textAreaValue]);
 
 	const handleTextArea = e => {
 		const value = e.target.value;
 		setTextareaValue(value);
 	};
 
-	const components = {
-		h1: ({ node, ...props }) => (
-			<h1 className="font-Inter font-bold text-4xl py-6" {...props} />
-		),
-		h2: ({ node, ...props }) => (
-			<h2 className="text-3xl font-bold font-Inter py-6" {...props} />
-		),
-		h3: ({ node, ...props }) => (
-			<h3 className="text-2xl font-bold font-Inter py-4" {...props} />
-		),
-		h4: ({ node, ...props }) => (
-			<h3 className="text-xl font-medium font-Inter py-2" {...props} />
-		),
-		h5: ({ node, ...props }) => (
-			<h5 className="text-lg font-medium font-Inter py-2" {...props} />
-		),
-		h6: ({ node, ...props }) => (
-			<h5 className="text-base font-normal font-Inter py-2" {...props} />
-		),
-		p: ({ node, ...props }) => (
-			<p
-				className="text-lg font-normal font-Inter py-2 max-w-full"
-				{...props}
-			/>
-		),
-		pre: ({ node, ...props }) => {
-			const codeString = props["children"][0]["props"]["children"][0];
-			const languageName =
-				props["children"][0]["props"]["className"]?.split("-")[1];
-			return <Code codeString={codeString} language={languageName} />;
-		},
+	const handleH1 = e => {
+		e.preventDefault();
+		setTextareaValue(textAreaValue + "\n# Type here ...");
+	};
 
-		code: ({ node, inline, ...props }) => {
-			if (inline)
-				return (
-					<code className="font-mono bg-gray-100 text-base p-2" {...props} />
-				);
-		},
-		ul: ({ node, ...props }) => (
-			<ul className="list-disc list-inside py-4" {...props} />
-		),
+	const handleH2 = e => {
+		e.preventDefault();
+		setTextareaValue(textAreaValue + "\n## Type here ...");
+	};
+	const handleH3 = e => {
+		e.preventDefault();
+		setTextareaValue(textAreaValue + "\n### Type here ...");
+	};
+	const handleCode = e => {
+		e.preventDefault();
+		setTextareaValue(textAreaValue + "\n```language \n Type here ... \n ```");
+	};
+	const handleList = e => {
+		e.preventDefault();
+		setTextareaValue(
+			textAreaValue + "\n- list element 1 \n- list element 2 \n- list element 3"
+		);
+	};
 
-		ol: ({ node, ...props }) => (
-			<ul className="list-decimal list-inside py-4" {...props} />
-		),
-
-		li: ({ node, ...props }) => {
-			return (
-				<li
-					className="font-Inter font-normal text-lg sm:text-lg leading-loose sm:leading-loose"
-					{...props}
-				/>
-			);
-		},
+	const handleimg = e => {
+		e.preventDefault();
+		setTextareaValue(textAreaValue + "\n![Alt text here](image link ...)");
 	};
 
 	return (
@@ -77,14 +56,29 @@ const HomePage = () => {
 					rel="stylesheet"
 				/>
 			</Head>
-			<section className="h-screen w-screen grid grid-cols-2 p-8">
+			<header className="border-b flex items-center">
+				<img
+					src="/logo.svg"
+					alt="Preview markdown logo"
+					className="h-16 px-12 py-4"
+				/>
+				<nav className="flex w-1/4 justify-between">
+					<EditorBtn onClick={handleH1}>H1</EditorBtn>
+					<EditorBtn onClick={handleH2}>H2</EditorBtn>
+					<EditorBtn onClick={handleH3}>H3</EditorBtn>
+					<EditorBtn onClick={handleCode}>Code</EditorBtn>
+					<EditorBtn onClick={handleList}>List</EditorBtn>
+					<EditorBtn onClick={handleimg}>Image</EditorBtn>
+				</nav>
+			</header>
+			<section className="h-screen grid grid-cols-2 p-8">
 				<textarea
 					name="editor"
 					placeholder="Start typing ..."
 					value={textAreaValue}
 					onChange={handleTextArea}
-					className="w-full outline-none h-full resize-none font-Inter"></textarea>
-				<div className="max-w-full">
+					className="w-full outline-none h-full resize-none font-Inter border-r pr-4"></textarea>
+				<div className="max-w-full pl-4">
 					<ReactMarkdown remarkPlugins={[gfm]} components={components}>
 						{textAreaValue}
 					</ReactMarkdown>
