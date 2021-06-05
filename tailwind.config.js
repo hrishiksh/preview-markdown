@@ -12,6 +12,9 @@ module.exports = {
 					"-apple-system",
 				],
 			},
+			colors: {
+				twitter: "#1da1f2",
+			},
 		},
 	},
 	variants: {

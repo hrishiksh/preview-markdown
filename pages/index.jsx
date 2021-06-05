@@ -1,17 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import Head from "next/head";
 import components from "../utils/EditorComponents";
 import EditorBtn from "../components/EditorBtn";
+import Tweeter from "../components/Twitter";
+import { MenuBtn, MenuContainer } from "../components/Menu";
 
 const HomePage = () => {
 	const [textAreaValue, setTextareaValue] = useState("");
 
-	useEffect(() => {
-		const grammerly = document.querySelector("grammarly-extension");
-		console.log(textAreaValue);
-	}, [textAreaValue]);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const handleTextArea = e => {
 		const value = e.target.value;
@@ -47,6 +46,14 @@ const HomePage = () => {
 		setTextareaValue(textAreaValue + "\n![Alt text here](image link ...)");
 	};
 
+	const handleTable = e => {
+		e.preventDefault();
+		setTextareaValue(
+			textAreaValue +
+				"\n| Tables   |      Are      |  Cool |\n|----------|:-------------:|------:|\n| col 1 is |  left-aligned | $1600 |\n| col 2 is |    centered   |   $12 |\n| col 3 is | right-aligned |    $"
+		);
+	};
+
 	return (
 		<>
 			<Head>
@@ -56,34 +63,40 @@ const HomePage = () => {
 					rel="stylesheet"
 				/>
 			</Head>
-			<header className="border-b flex items-center">
+			<header className="border-b flex items-center justify-between mx-8">
 				<img
 					src="/logo.svg"
 					alt="Preview markdown logo"
-					className="h-16 px-12 py-4"
+					className="h-16  py-4"
 				/>
-				<nav className="flex w-1/4 justify-between">
+				<nav className="flex flex-1 justify-center">
 					<EditorBtn onClick={handleH1}>H1</EditorBtn>
 					<EditorBtn onClick={handleH2}>H2</EditorBtn>
 					<EditorBtn onClick={handleH3}>H3</EditorBtn>
 					<EditorBtn onClick={handleCode}>Code</EditorBtn>
 					<EditorBtn onClick={handleList}>List</EditorBtn>
 					<EditorBtn onClick={handleimg}>Image</EditorBtn>
+					<EditorBtn onClick={handleTable}>Table</EditorBtn>
 				</nav>
+				<MenuBtn
+					isopen={isMenuOpen}
+					toggle={() => setIsMenuOpen(!isMenuOpen)}
+				/>
 			</header>
-			<section className="h-screen grid grid-cols-2 p-8">
+			<main className="h-screen grid grid-cols-2 p-8">
+				<MenuContainer isOpen={isMenuOpen} />
 				<textarea
 					name="editor"
 					placeholder="Start typing ..."
 					value={textAreaValue}
 					onChange={handleTextArea}
 					className="w-full outline-none h-full resize-none font-Inter border-r pr-4"></textarea>
-				<div className="max-w-full pl-4">
+				<section className="max-w-full pl-4">
 					<ReactMarkdown remarkPlugins={[gfm]} components={components}>
 						{textAreaValue}
 					</ReactMarkdown>
-				</div>
-			</section>
+				</section>
+			</main>
 		</>
 	);
 };

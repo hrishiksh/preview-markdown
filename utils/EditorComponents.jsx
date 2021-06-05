@@ -59,12 +59,24 @@ const components = {
 	// strong:
 	// del:
 	// input:
-	// table:
-	// tbody:
-	// td:
-	// th:
-	// thead:
+	table: ({ node, ...props }) => (
+		<table className="font-Inter border table-auto rounded-lg" {...props} />
+	),
+	td: ({ node, ...props }) => (
+		<td
+			className="font-Inter font-normal text-base border py-3 px-4"
+			{...props}
+		/>
+	),
+	th: ({ node, ...props }) => (
+		<th
+			className="font-Inter font-medium text-base border  py-3 px-4"
+			{...props}
+		/>
+	),
+	thead: ({ node, ...props }) => <thead className="bg-gray-50" {...props} />,
 	// tr:
+	// tbody:
 };
 
 export default components;
