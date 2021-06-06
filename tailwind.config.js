@@ -24,6 +24,7 @@ module.exports = {
 			},
 			colors: {
 				twitter: "#1da1f2",
+				bluePrimary: "#5B6CFF",
 			},
 		},
 	},

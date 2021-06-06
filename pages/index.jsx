@@ -29,6 +29,8 @@ const HomePage = () => {
 	return (
 		<MenuProvider>
 			<Head>
+				<link rel="icon" type="image/svg+xml" href="/icon.svg" />
+				<title>Preview Markdown</title>
 				<link rel="preconnect" href="https://fonts.gstatic.com" />
 				<link
 					href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -67,8 +69,7 @@ const HomePage = () => {
 						Image
 					</EditorBtn>
 					<EditorBtn
-						// onClick={() => handleVideo(textAreaValue, setTextareaValue)}
-						onClick={() => saveMarkdownFile(textAreaValue)}>
+						onClick={() => handleVideo(textAreaValue, setTextareaValue)}>
 						Video
 					</EditorBtn>
 				</nav>
@@ -78,7 +79,7 @@ const HomePage = () => {
 				/>
 			</header>
 			<main className="h-screen grid grid-cols-2 p-8">
-				<MenuContainer isOpen={isMenuOpen} />
+				<MenuContainer isOpen={isMenuOpen} textAreaValue={textAreaValue} />
 				<textarea
 					name="editor"
 					placeholder="Start typing ..."

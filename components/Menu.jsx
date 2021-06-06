@@ -1,4 +1,6 @@
 import { createContext, useState, useContext } from "react";
+import IconBtn from "./IconBtn";
+import { saveMarkdownFile } from "../utils/saveFile";
 
 const menucontext = createContext([0, undefined]);
 
@@ -14,42 +16,25 @@ const MenuProvider = ({ children }) => {
 
 const MenuBtn = ({ isopen, toggle }) => {
 	return (
-		<div>
-			{isopen ? (
+		<IconBtn
+			title="More"
+			icon={
 				<svg
-					onClick={toggle}
 					xmlns="http://www.w3.org/2000/svg"
-					width="30"
-					height="30"
+					width="20"
+					height="20"
 					viewBox="0 0 24 24"
 					strokeWidth="1.5"
-					stroke="#2c3e50"
+					stroke="#ffffff"
 					fill="none"
 					strokeLinecap="round"
 					strokeLinejoin="round">
 					<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-					<line x1="18" y1="6" x2="6" y2="18" />
-					<line x1="6" y1="6" x2="18" y2="18" />
+					<polyline points="6 9 12 15 18 9" />
 				</svg>
-			) : (
-				<svg
-					onClick={toggle}
-					xmlns="http://www.w3.org/2000/svg"
-					width="30"
-					height="30"
-					viewBox="0 0 24 24"
-					strokeWidth="1.5"
-					stroke="#2c3e50"
-					fill="none"
-					strokeLinecap="round"
-					strokeLinejoin="round">
-					<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-					<line x1="4" y1="6" x2="20" y2="6" />
-					<line x1="4" y1="12" x2="20" y2="12" />
-					<line x1="4" y1="18" x2="20" y2="18" />
-				</svg>
-			)}
-		</div>
+			}
+			onClick={toggle}
+		/>
 	);
 };
 
@@ -69,7 +54,7 @@ const ListTile = ({ svg, bgColor, title, subtitle, onClick, isactive }) => {
 	);
 };
 
-const MenuContainer = ({ isOpen }) => {
+const MenuContainer = ({ isOpen, textAreaValue }) => {
 	const [menuIndex, setMenuIndex] = useContext(menucontext);
 
 	if (isOpen) {
@@ -121,9 +106,7 @@ const MenuContainer = ({ isOpen }) => {
 		];
 
 		return (
-			<div
-				className="h-1/2 w-1/4 top-20 right-10 fixed bg-white border
-            shadow-md rounded-lg">
+			<div className="h-1/2 w-1/4 top-20 right-10 fixed bg-white border shadow-md rounded-lg">
 				<h3 className="font-Inter text-xl font-semibold px-8 pt-8 pb-4 select-none">
 					Toggle markdown style
 				</h3>
@@ -140,6 +123,33 @@ const MenuContainer = ({ isOpen }) => {
 						/>
 					);
 				})}
+				<h3 className="font-Inter text-xl font-semibold px-8 py-4 select-none">
+					Downloads
+				</h3>
+				<ListTile
+					svg={
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="44"
+							height="44"
+							viewBox="0 0 24 24"
+							strokeWidth="1"
+							stroke="#5B6CFF"
+							fill="none"
+							strokeLinecap="round"
+							strokeLinejoin="round">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M19 18a3.5 3.5 0 0 0 0 -7h-1a5 4.5 0 0 0 -11 -2a4.6 4.4 0 0 0 -2.1 8.4" />
+							<line x1="12" y1="13" x2="12" y2="22" />
+							<polyline points="9 19 12 22 15 19" />
+						</svg>
+					}
+					bgColor={"bg-blue-100"}
+					title={"Download as markdown"}
+					subtitle={"Save a copy on your device"}
+					isactive={false}
+					onClick={() => saveMarkdownFile(textAreaValue)}
+				/>
 			</div>
 		);
 	}
