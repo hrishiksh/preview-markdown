@@ -11,6 +11,16 @@ module.exports = {
 					"system-ui",
 					"-apple-system",
 				],
+				github: [
+					"-apple-system",
+					"BlinkMacSystemFont",
+					"Segoe UI",
+					"Helvetica",
+					"Arial",
+					"sans-serif",
+					"Apple Color Emoji",
+					"Segoe UI Emoji",
+				],
 			},
 			colors: {
 				twitter: "#1da1f2",

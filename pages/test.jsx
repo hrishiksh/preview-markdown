@@ -1,10 +1,12 @@
+import { saveMarkdownFile } from "../utils/saveFile";
+
 const Test = () => {
 	return (
 		<>
 			<h1>This is a tweeter btn</h1>
-			<a href="https://twitter.com/intent/tweet?text=Hello%20World&hashtags=developer,100daysofcode">
-				tweet
-			</a>
+			<button onClick={() => saveMarkdownFile("hello guys, i am hrishikesh")}>
+				save
+			</button>
 		</>
 	);
 };

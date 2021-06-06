@@ -1,11 +1,20 @@
 import { useState } from "react";
-import ReactMarkdown from "react-markdown";
-import gfm from "remark-gfm";
 import Head from "next/head";
-import components from "../utils/EditorComponents";
 import EditorBtn from "../components/EditorBtn";
 import Tweeter from "../components/Twitter";
-import { MenuBtn, MenuContainer } from "../components/Menu";
+import { MenuBtn, MenuContainer, MenuProvider } from "../components/Menu";
+import PreviewWindow from "../components/PreviewWindow";
+import { saveMarkdownFile } from "../utils/saveFile";
+import {
+	handleH1,
+	handleH2,
+	handleH3,
+	handleCode,
+	handleList,
+	handleTable,
+	handleimg,
+	handleVideo,
+} from "../utils/editorBtnHandler";
 
 const HomePage = () => {
 	const [textAreaValue, setTextareaValue] = useState("");
@@ -17,45 +26,8 @@ const HomePage = () => {
 		setTextareaValue(value);
 	};
 
-	const handleH1 = e => {
-		e.preventDefault();
-		setTextareaValue(textAreaValue + "\n# Type here ...");
-	};
-
-	const handleH2 = e => {
-		e.preventDefault();
-		setTextareaValue(textAreaValue + "\n## Type here ...");
-	};
-	const handleH3 = e => {
-		e.preventDefault();
-		setTextareaValue(textAreaValue + "\n### Type here ...");
-	};
-	const handleCode = e => {
-		e.preventDefault();
-		setTextareaValue(textAreaValue + "\n```language \n Type here ... \n ```");
-	};
-	const handleList = e => {
-		e.preventDefault();
-		setTextareaValue(
-			textAreaValue + "\n- list element 1 \n- list element 2 \n- list element 3"
-		);
-	};
-
-	const handleimg = e => {
-		e.preventDefault();
-		setTextareaValue(textAreaValue + "\n![Alt text here](image link ...)");
-	};
-
-	const handleTable = e => {
-		e.preventDefault();
-		setTextareaValue(
-			textAreaValue +
-				"\n| Tables   |      Are      |  Cool |\n|----------|:-------------:|------:|\n| col 1 is |  left-aligned | $1600 |\n| col 2 is |    centered   |   $12 |\n| col 3 is | right-aligned |    $"
-		);
-	};
-
 	return (
-		<>
+		<MenuProvider>
 			<Head>
 				<link rel="preconnect" href="https://fonts.gstatic.com" />
 				<link
@@ -70,13 +42,35 @@ const HomePage = () => {
 					className="h-16  py-4"
 				/>
 				<nav className="flex flex-1 justify-center">
-					<EditorBtn onClick={handleH1}>H1</EditorBtn>
-					<EditorBtn onClick={handleH2}>H2</EditorBtn>
-					<EditorBtn onClick={handleH3}>H3</EditorBtn>
-					<EditorBtn onClick={handleCode}>Code</EditorBtn>
-					<EditorBtn onClick={handleList}>List</EditorBtn>
-					<EditorBtn onClick={handleimg}>Image</EditorBtn>
-					<EditorBtn onClick={handleTable}>Table</EditorBtn>
+					<EditorBtn onClick={() => handleH1(textAreaValue, setTextareaValue)}>
+						H1
+					</EditorBtn>
+					<EditorBtn onClick={() => handleH2(textAreaValue, setTextareaValue)}>
+						H2
+					</EditorBtn>
+					<EditorBtn onClick={() => handleH3(textAreaValue, setTextareaValue)}>
+						H3
+					</EditorBtn>
+					<EditorBtn
+						onClick={() => handleCode(textAreaValue, setTextareaValue)}>
+						Code
+					</EditorBtn>
+					<EditorBtn
+						onClick={() => handleList(textAreaValue, setTextareaValue)}>
+						List
+					</EditorBtn>
+					<EditorBtn
+						onClick={() => handleTable(textAreaValue, setTextareaValue)}>
+						Table
+					</EditorBtn>
+					<EditorBtn onClick={() => handleimg(textAreaValue, setTextareaValue)}>
+						Image
+					</EditorBtn>
+					<EditorBtn
+						// onClick={() => handleVideo(textAreaValue, setTextareaValue)}
+						onClick={() => saveMarkdownFile(textAreaValue)}>
+						Video
+					</EditorBtn>
 				</nav>
 				<MenuBtn
 					isopen={isMenuOpen}
@@ -91,13 +85,9 @@ const HomePage = () => {
 					value={textAreaValue}
 					onChange={handleTextArea}
 					className="w-full outline-none h-full resize-none font-Inter border-r pr-4"></textarea>
-				<section className="max-w-full pl-4">
-					<ReactMarkdown remarkPlugins={[gfm]} components={components}>
-						{textAreaValue}
-					</ReactMarkdown>
-				</section>
+				<PreviewWindow textAreaValue={textAreaValue} />
 			</main>
-		</>
+		</MenuProvider>
 	);
 };
 
