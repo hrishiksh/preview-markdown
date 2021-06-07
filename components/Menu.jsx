@@ -41,7 +41,7 @@ const MenuBtn = ({ isopen, toggle }) => {
 const ListTile = ({ svg, bgColor, title, subtitle, onClick, isactive }) => {
 	return (
 		<div
-			className={`flex items-center mx-6 my-2 p-2 rounded-lg ${
+			className={`flex items-center my-2 p-2 rounded-lg ${
 				isactive ? "bg-gray-50" : "hover:bg-gray-50"
 			}`}
 			onClick={onClick}>
@@ -106,9 +106,9 @@ const MenuContainer = ({ isOpen, textAreaValue }) => {
 		];
 
 		return (
-			<div className="h-1/2 w-1/4 top-20 right-10 fixed bg-white border shadow-md rounded-lg">
-				<h3 className="font-Inter text-xl font-semibold px-8 pt-8 pb-4 select-none">
-					Toggle markdown style
+			<div className="h-auto w-max top-20 right-10 fixed bg-white border shadow-md rounded-lg p-6">
+				<h3 className="font-Inter text-xl font-semibold select-none">
+					Preview style
 				</h3>
 				{menuItems.map((item, index) => {
 					return (
@@ -123,7 +123,7 @@ const MenuContainer = ({ isOpen, textAreaValue }) => {
 						/>
 					);
 				})}
-				<h3 className="font-Inter text-xl font-semibold px-8 py-4 select-none">
+				<h3 className="font-Inter text-xl font-semibold select-none">
 					Downloads
 				</h3>
 				<ListTile

@@ -35,7 +35,7 @@ const defaultTheme = {
 				<code className="font-mono bg-gray-100 text-base p-2" {...props} />
 			);
 	},
-	ul: ({ node, ...props }) => (
+	ul: ({ node, ordered, ...props }) => (
 		<ul className="list-disc list-inside py-4" {...props} />
 	),
 
@@ -43,10 +43,10 @@ const defaultTheme = {
 		<ul className="list-decimal list-inside py-4" {...props} />
 	),
 
-	li: ({ node, ...props }) => {
+	li: ({ node, ordered, ...props }) => {
 		return (
 			<li
-				className="font-Inter font-normal text-lg sm:text-lg leading-loose sm:leading-loose"
+				className="font-Inter font-normal text-lg leading-loose "
 				{...props}
 			/>
 		);
@@ -77,13 +77,13 @@ const defaultTheme = {
 	table: ({ node, ...props }) => (
 		<table className="font-Inter border table-auto rounded-lg" {...props} />
 	),
-	td: ({ node, ...props }) => (
+	td: ({ node, isHeader, ...props }) => (
 		<td
 			className="font-Inter font-normal text-base border py-3 px-4"
 			{...props}
 		/>
 	),
-	th: ({ node, ...props }) => (
+	th: ({ node, isHeader, ...props }) => (
 		<th
 			className="font-Inter font-medium text-base border  py-3 px-4"
 			{...props}

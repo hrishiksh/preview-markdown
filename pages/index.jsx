@@ -1,10 +1,14 @@
 import { useState } from "react";
 import Head from "next/head";
 import EditorBtn from "../components/EditorBtn";
-import Tweeter from "../components/Twitter";
 import { MenuBtn, MenuContainer, MenuProvider } from "../components/Menu";
 import PreviewWindow from "../components/PreviewWindow";
-import { saveMarkdownFile } from "../utils/saveFile";
+import htmlToPdf from "../utils/htmlToPdf";
+import {
+	handleDragEnter,
+	handleDragOver,
+	handleDrop,
+} from "../utils/uploadFile";
 import {
 	handleH1,
 	handleH2,
@@ -69,7 +73,8 @@ const HomePage = () => {
 						Image
 					</EditorBtn>
 					<EditorBtn
-						onClick={() => handleVideo(textAreaValue, setTextareaValue)}>
+						// onClick={() => handleVideo(textAreaValue, setTextareaValue)}>
+						onClick={() => htmlToPdf(document.getElementById("preview"))}>
 						Video
 					</EditorBtn>
 				</nav>
@@ -82,9 +87,12 @@ const HomePage = () => {
 				<MenuContainer isOpen={isMenuOpen} textAreaValue={textAreaValue} />
 				<textarea
 					name="editor"
-					placeholder="Start typing ..."
+					placeholder="Drop a Markdown file or start typing ..."
 					value={textAreaValue}
 					onChange={handleTextArea}
+					onDragEnter={handleDragEnter}
+					onDragOver={handleDragOver}
+					onDrop={e => handleDrop(e, setTextareaValue)}
 					className="w-full outline-none h-full resize-none font-Inter border-r pr-4"></textarea>
 				<PreviewWindow textAreaValue={textAreaValue} />
 			</main>

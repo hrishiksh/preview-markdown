@@ -7,7 +7,7 @@ import { defaultTheme, githubTheme } from "../utils/EditorThems";
 const PreviewWindow = ({ textAreaValue }) => {
 	const [menuindex, setMenuIndex] = useContext(menucontext);
 	return (
-		<section className="max-w-full pl-4">
+		<section className="max-w-full pl-4" id="preview">
 			<ReactMarkdown
 				remarkPlugins={[gfm]}
 				components={menuindex == 0 ? defaultTheme : githubTheme}>
