@@ -37,16 +37,16 @@ const pdfTailwindStyles = {
 		bold: false,
 	},
 	"p-2": {
-		margin: [0, 5, 0, 5],
+		margin: [0, 3, 0, 3],
 	},
 	"py-4": {
-		margin: [0, 10, 0, 10],
+		margin: [0, 6, 0, 6],
 	},
 	"py-2": {
-		margin: [0, 5, 0, 5],
+		margin: [0, 3, 0, 3],
 	},
 	"leading-loose": {
-		lineHeight: 2,
+		lineHeight: 1.5,
 	},
 	"w-full": {
 		margin: [0, 0, 0, 0],

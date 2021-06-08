@@ -73,8 +73,7 @@ const HomePage = () => {
 						Image
 					</EditorBtn>
 					<EditorBtn
-						// onClick={() => handleVideo(textAreaValue, setTextareaValue)}>
-						onClick={() => htmlToPdf(document.getElementById("preview"))}>
+						onClick={() => handleVideo(textAreaValue, setTextareaValue)}>
 						Video
 					</EditorBtn>
 				</nav>
@@ -84,7 +83,11 @@ const HomePage = () => {
 				/>
 			</header>
 			<main className="h-screen grid grid-cols-2 p-8">
-				<MenuContainer isOpen={isMenuOpen} textAreaValue={textAreaValue} />
+				<MenuContainer
+					isOpen={isMenuOpen}
+					textAreaValue={textAreaValue}
+					setIsMenuOpen={setIsMenuOpen}
+				/>
 				<textarea
 					name="editor"
 					placeholder="Drop a Markdown file or start typing ..."

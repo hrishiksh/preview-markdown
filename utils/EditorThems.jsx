@@ -40,7 +40,7 @@ const defaultTheme = {
 	),
 
 	ol: ({ node, ...props }) => (
-		<ul className="list-decimal list-inside py-4" {...props} />
+		<ol className="list-decimal list-inside py-4" {...props} />
 	),
 
 	li: ({ node, ordered, ...props }) => {

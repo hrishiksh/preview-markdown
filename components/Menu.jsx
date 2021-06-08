@@ -1,6 +1,8 @@
 import { createContext, useState, useContext } from "react";
 import IconBtn from "./IconBtn";
 import { saveMarkdownFile } from "../utils/saveFile";
+import CompileHtmlToPdf from "../utils/htmlToPdf";
+import compileHtmltoPdf from "../utils/htmlToPdf";
 
 const menucontext = createContext([0, undefined]);
 
@@ -54,7 +56,7 @@ const ListTile = ({ svg, bgColor, title, subtitle, onClick, isactive }) => {
 	);
 };
 
-const MenuContainer = ({ isOpen, textAreaValue }) => {
+const MenuContainer = ({ isOpen, textAreaValue, setIsMenuOpen }) => {
 	const [menuIndex, setMenuIndex] = useContext(menucontext);
 
 	if (isOpen) {
@@ -119,7 +121,10 @@ const MenuContainer = ({ isOpen, textAreaValue }) => {
 							title={item.title}
 							subtitle={item.subtitle}
 							isactive={menuIndex == index ? true : false}
-							onClick={() => setMenuIndex(index)}
+							onClick={() => {
+								setMenuIndex(index);
+								setIsMenuOpen(false);
+							}}
 						/>
 					);
 				})}
@@ -148,7 +153,39 @@ const MenuContainer = ({ isOpen, textAreaValue }) => {
 					title={"Download as markdown"}
 					subtitle={"Save a copy on your device"}
 					isactive={false}
-					onClick={() => saveMarkdownFile(textAreaValue)}
+					onClick={() => {
+						saveMarkdownFile(textAreaValue);
+						setIsMenuOpen(false);
+					}}
+				/>
+				<ListTile
+					svg={
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="44"
+							height="44"
+							viewBox="0 0 24 24"
+							strokeWidth="1"
+							stroke="#ff0000"
+							fill="none"
+							strokeLinecap="round"
+							strokeLinejoin="round">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M14 3v4a1 1 0 0 0 1 1h4" />
+							<path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+							<line x1="9" y1="9" x2="10" y2="9" />
+							<line x1="9" y1="13" x2="15" y2="13" />
+							<line x1="9" y1="17" x2="15" y2="17" />
+						</svg>
+					}
+					bgColor={"bg-red-100"}
+					title={"Download as Pdf"}
+					subtitle={"Beta feature"}
+					isactive={false}
+					onClick={() => {
+						setIsMenuOpen(false);
+						compileHtmltoPdf(document.getElementById("preview"));
+					}}
 				/>
 			</div>
 		);
